@@ -8,9 +8,15 @@ public class IMDBTopMovies {
             System.exit(-1);
         }
 
-        String apiKey = args[0].trim();
-        String apiEndPoint = String.format("https://imdb-api.com/en/API/Top250Movies/%s", apiKey);
+        String apiEndpoint = getAPIEndpoint("https://imdb-api.com/en/API/Top250Movies", args[0]);
 
-        System.out.println(apiEndPoint);
+        System.out.println(apiEndpoint);
+    }
+
+    private static String getAPIEndpoint (String uri, String key) {
+        String apiKey = key.trim();
+        String apiEndPoint = String.format(uri + "/%s", apiKey);        
+
+        return apiEndPoint;
     }
 }
