@@ -26,22 +26,22 @@ public class HTMLGenerator {
 
     private String htmlBody(Movie m) {
         return """
-<div class="col">
-    <div class="card" style="width: 18rem;">
-""" + 
-String.format("<img src='%s' class='card-img-top' alt='...'>", m.getimgURL())
-    +
-"""
-        <div class="card-body">
-""" + 
-String.format("<h5 class='card-title'>%s</h5>", m.getTitle())
-+
-String.format("<p class='card-text'>Year: %d / Rating: %f</p>", m.getYear(), m.getRating())
-+
-"""
-        </div>
-    </div>
-</div>            
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+            """ + 
+            String.format("<img src='%s' class='card-img-top' alt='...'>", m.getimgURL())
+                +
+            """
+                    <div class="card-body">
+            """ + 
+            String.format("<h5 class='card-title'>%d. %s</h5>", m.getRank(), m.getTitle())
+            +
+            String.format("<p class='card-text'>Year: %d / Rating: %.2f</p>", m.getYear(), m.getRating())
+            +
+            """
+                    </div>
+                </div>
+            </div>            
         """;
     }
 

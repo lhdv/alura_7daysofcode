@@ -24,7 +24,6 @@ public class IMDBTopMovies {
         System.out.println("[INFO] Calling API EndPoint: "+ apiEndpoint);
 
         String json = callAPI(apiEndpoint);
-
         List<Movie> movieList = getMoviesFromJson(json);
 
         try {
@@ -100,7 +99,8 @@ public class IMDBTopMovies {
             result.add(new Movie(getJsonValue(fields[2]), 
                 getJsonValue(fields[5]), 
                 Integer.parseInt(getJsonValue(fields[4])), 
-                Float.parseFloat(getJsonValue(fields[7])))
+                Float.parseFloat(getJsonValue(fields[7])),
+                Integer.parseInt(getJsonValue(fields[1])))
             );
         }
         

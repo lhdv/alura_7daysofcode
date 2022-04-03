@@ -3,12 +3,14 @@ public class Movie {
     private String imgURL;
     private int year;
     private float rating;
+    private int rank;
     
-    public Movie(String title, String imgURL, int year, float rating) {
+    public Movie(String title, String imgURL, int year, float rating, int rank) {
         this.title = title;
         this.imgURL = imgURL;
         this.year = year;
         this.rating = rating;
+        this.rank = rank;
     }
 
     public String getTitle() {
@@ -34,10 +36,17 @@ public class Movie {
     }
     public void setRating(float rating) {
         this.rating = rating;
-    }   
+    }  
+    public int getRank() {
+        return rank;
+    }
+    public void setRank(int rank) {
+        this.rank = rank;
+    } 
+    
 
     @Override
     public String toString() {        
-        return String.format("[Title: %s / Year: %d / Rating: %f]", this.title, this.year, this.rating);
+        return String.format("[Title: %s / Year: %d / Rating: %f / Rank: %d]", this.title, this.year, this.rating, this.rank);
     }
 }
