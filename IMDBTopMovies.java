@@ -3,6 +3,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class IMDBTopMovies {
     public static void main(String[] args) {
@@ -18,12 +21,19 @@ public class IMDBTopMovies {
 
         System.out.println("[INFO] Calling API EndPoint: "+ apiEndpoint);
 
-        System.out.println(callAPI(apiEndpoint));
+        String json = callAPI(apiEndpoint);
+        List<String> records = getRecordsFromJson(json);
+
+        List<String> titles = parseTitles(records);
+        List<String> images = parseImages(records);
+
+        System.out.println(titles);
+        System.out.println(images);
     }
     
     private static String getAPIEndpoint (String uri, String key) {
         String apiKey = key.trim();
-        String apiEndPoint = String.format(uri + "/%s", apiKey);        
+        String apiEndPoint = String.format(uri + "/%s", apiKey);
         
         return apiEndPoint;
     }
@@ -46,4 +56,33 @@ public class IMDBTopMovies {
 
         return response.body();
     }
+
+    private static String getJsonValue(String rawJson) {
+        String[] result = rawJson.split("\":\"");
+        return result[1];
+    }
+
+    private static List<String> getRecordsFromJson(String json) {
+        return Arrays.asList(json.split("},"));
+    }
+
+    private static List<String> parseTitles(List<String> recs) {
+        return parseFields(recs, 2);
+    }
+
+    private static List<String> parseImages(List<String> recs) {
+        return parseFields(recs, 5);
+    }
+
+    private static List<String> parseFields(List<String> recs, int fieldNum) {
+        ArrayList<String> result = new ArrayList<String>();
+
+        for (String r : recs) {
+            String[] fields = r.split("\",\"");
+            result.add(getJsonValue(fields[fieldNum]));
+        }
+
+        return result;
+    }
+
 }
