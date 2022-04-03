@@ -30,6 +30,7 @@ public class IMDBTopMovies {
             BufferedWriter bufWriter = new BufferedWriter(new FileWriter("index.html"));
             HTMLGenerator htmlFileWriter = new HTMLGenerator(bufWriter);
             htmlFileWriter.generate(movieList);
+            bufWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -96,11 +97,13 @@ public class IMDBTopMovies {
 
         for (String r : records) {
             String[] fields = r.split("\",\"");
-            result.add(new Movie(getJsonValue(fields[2]), 
+            result.add(new Movie(
+                getJsonValue(fields[2]), 
                 getJsonValue(fields[5]), 
                 Integer.parseInt(getJsonValue(fields[4])), 
                 Float.parseFloat(getJsonValue(fields[7])),
-                Integer.parseInt(getJsonValue(fields[1])))
+                Integer.parseInt(getJsonValue(fields[1]))
+                )
             );
         }
         
