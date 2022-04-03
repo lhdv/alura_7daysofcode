@@ -1,3 +1,5 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -9,7 +11,7 @@ import java.util.List;
 
 public class IMDBTopMovies {
     public static void main(String[] args) {
-        
+       
         System.out.println("=== IMDB CLI ===");
 
         if (args.length < 1) {
@@ -22,16 +24,16 @@ public class IMDBTopMovies {
         System.out.println("[INFO] Calling API EndPoint: "+ apiEndpoint);
 
         String json = callAPI(apiEndpoint);
-        List<String> records = getRecordsFromJson(json);
-
-        List<String> titles = parseTitles(records);
-        List<String> images = parseImages(records);
-
-        System.out.println(titles);
-        System.out.println(images);
 
         List<Movie> movieList = getMoviesFromJson(json);
-        System.out.println(movieList);
+
+        try {
+            BufferedWriter bufWriter = new BufferedWriter(new FileWriter("index.html"));
+            HTMLGenerator htmlFileWriter = new HTMLGenerator(bufWriter);
+            htmlFileWriter.generate(movieList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     private static String getAPIEndpoint (String uri, String key) {
