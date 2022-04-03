@@ -29,6 +29,9 @@ public class IMDBTopMovies {
 
         System.out.println(titles);
         System.out.println(images);
+
+        List<Movie> movieList = getMoviesFromJson(json);
+        System.out.println(movieList);
     }
     
     private static String getAPIEndpoint (String uri, String key) {
@@ -82,6 +85,23 @@ public class IMDBTopMovies {
             result.add(getJsonValue(fields[fieldNum]));
         }
 
+        return result;
+    }
+
+    private static List<Movie> getMoviesFromJson(String json) {
+        ArrayList<Movie> result = new ArrayList<Movie>();
+
+        List<String> records = getRecordsFromJson(json);
+
+        for (String r : records) {
+            String[] fields = r.split("\",\"");
+            result.add(new Movie(getJsonValue(fields[2]), 
+                getJsonValue(fields[5]), 
+                Integer.parseInt(getJsonValue(fields[4])), 
+                Float.parseFloat(getJsonValue(fields[7])))
+            );
+        }
+        
         return result;
     }
 
